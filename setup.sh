@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES='.profile .gemrc .gitconfig'
+DOTFILES='.gemrc .gitconfig .irbrc .profile'
 
 
 PWD=${PWD##*/}
