@@ -11,9 +11,9 @@ MIT (see LICENSE)
 
 # INSTALL
 
-git clone https://github.com/unixmonkey/dotfiles.git .dotfiles
-cd .dotfiles
-./setup.sh
+    git clone https://github.com/unixmonkey/dotfiles.git .dotfiles
+    cd .dotfiles
+    ./setup.sh
 
 # NOTES
 
