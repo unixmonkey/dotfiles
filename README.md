@@ -8,3 +8,13 @@ easily transferred from one computer to another.
 # LICENSE
 
 MIT (see LICENSE)
+
+# INSTALL
+
+git clone https://github.com/unixmonkey/dotfiles.git .dotfiles
+cd .dotfiles
+./setup.sh
+
+# NOTES
+
+If a dotfile already exists, it will be backed up in a timestamped folder.
