@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-DOTFILES='.gemrc .gitconfig .irbrc .profile'
+DOTFILES='.gemrc .gitconfig .irbrc .profile .vimrc'
+
+# Make ~/.vim/backup folder for .swp files
+mkdir -p ~/.vim/backup
 
 
 PWD=${PWD##*/}
