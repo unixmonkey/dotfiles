@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES='.profile'
+DOTFILES='.profile .gemrc'
 
 
 PWD=${PWD##*/}
