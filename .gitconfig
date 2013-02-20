@@ -1,0 +1,7 @@
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[user]
+	name = David Jones
+	email = unixmonkey1@gmail.com
