@@ -5,3 +5,5 @@
 [user]
 	name = David Jones
 	email = unixmonkey1@gmail.com
+[core]
+	excludesfile = ~/.gitignore_global
