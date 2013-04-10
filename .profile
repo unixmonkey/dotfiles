@@ -38,6 +38,7 @@ alias code='cd ~/code'
 alias b='bundle exec'
 alias st='open -a "Sublime Text 2" "$@"'
 alias clocrails='cloc . --exclude-dir=vendor,index,solr,tmp,script,log --force-lang="Ruby",feature --force-lang="Ruby",sass --force-lang="Ruby",haml'
+alias gitx='/Applications/GitX.app/Contents/MacOS/GitX'
 
 autopatch_intranet() {
   git format-patch HEAD~1
