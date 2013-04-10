@@ -74,7 +74,7 @@ s() {
   fi
 }
 sc() { s console $*; }
-ss() { s server $*; }
+ss() { s server $* --binding=127.0.0.1; }
 rake_route_urls(){
   rake routes | sed -e "1d" -e "s,^[^/]*,,g" | awk '{print $1}' | sort | uniq
 }
