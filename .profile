@@ -184,6 +184,7 @@ push_local_git_repo_to_server() {
 # load chruby
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
+chruby 2.0.0-p195
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
