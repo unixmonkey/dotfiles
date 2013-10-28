@@ -71,7 +71,7 @@ s() {
   if [ -e "script/$1" ]; then
     ./script/$*
   else
-    rails $*
+    bundle exec rails $*
   fi
 }
 sc() { s console $*; }
