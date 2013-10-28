@@ -18,7 +18,7 @@ export PATH=/usr/local/sbin:$PATH
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 export GIT_EDITOR='vim'
-export BUNDLE_EDITOR='vim'
+export BUNDLER_EDITOR='subl -w'
 
 # super happy fun prompt showing server name and current directory with purdy colors
 export TERM=xterm
