@@ -7,3 +7,5 @@
 	email = unixmonkey1@gmail.com
 [core]
 	excludesfile = ~/.gitignore_global
+[push]
+	default = simple
