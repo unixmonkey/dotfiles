@@ -21,7 +21,7 @@
 	],
 	"color_scheme": "Packages/Color Scheme - Default/Cobalt.tmTheme",
 	"draw_indent_guides": false,
-	"file_exclude_patters":
+	"file_exclude_patterns":
 	[
 		"*.pyc",
 		"*.pyo",
@@ -42,7 +42,10 @@
 		"*.class",
 		"*.psd",
 		"*.db",
-		"*.log"
+		"*.sublime-workspace",
+		"*.log",
+		"*.sql",
+		"*.dump"
 	],
 	"fold_buttons": true,
 	"folder_exclude_patterns":
@@ -55,10 +58,12 @@
 		"jammit",
 		"cache",
 		"tmp",
-		"public/uploads"
+		"public/uploads",
+		"coverage",
+		".idea"
 	],
 	"font_face": "Monaco",
-	"font_size": 13.0,
+	"font_size": 12.0,
 	"ignored_packages":
 	[
 		"Vintage"

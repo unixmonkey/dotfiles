@@ -24,7 +24,7 @@ for DOTFILE in ${DOTFILES}; do
 done
 
 echo "Copying Sublime Text Preferences"
-ST2PREF="Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings"
+ST2PREF="Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
 if [ -e ~/"${ST2PREF}" ]; then
   mv ~/"${ST2PREF}" ${BAKDIR}
 fi
