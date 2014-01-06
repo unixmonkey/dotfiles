@@ -24,7 +24,7 @@ export BUNDLER_EDITOR='subl -w'
 export TERM=xterm
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
-export PS1='\[\e[36m\]\[\033[0;35m\]iFruit\[\033[0;33m\] \w\[\033[00m\]: '
+export PS1='\[\e[36m\]\[\033[0;35m\]iFruit\[\033[0;33m\]\[\e[31m\]$(rubyversion)\[\033[0;33m\] \w\[\033[00m\]: '
 
 # Make ruby faster by tuning the garbage collector
 #export RUBY_HEAP_MIN_SLOTS=500000
@@ -47,6 +47,10 @@ autopatch_intranet() {
     scp *.patch root@$SERVER:~/intranet
   done
   shit
+}
+
+rubyversion(){
+  echo " $(echo $RUBY_ROOT | awk -F/ '{print $NF}')"
 }
 
 # GIT aliases
