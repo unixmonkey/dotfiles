@@ -19,6 +19,9 @@ export EDITOR='vim'
 export SVN_EDITOR='vim'
 export GIT_EDITOR='vim'
 export BUNDLER_EDITOR='subl -w'
+function e(){
+  subl -n $*
+}
 
 # super happy fun prompt showing server name and current directory with purdy colors
 export TERM=xterm
