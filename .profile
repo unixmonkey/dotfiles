@@ -50,6 +50,7 @@ color_my_prompt
 # Shortcuts
 alias code='cd ~/code'
 alias b='bundle exec'
+alias bake='bundle exec rake'
 alias st='open -a "Sublime Text" "$@"'
 alias clocrails='cloc . --exclude-dir=vendor,index,solr,tmp,script,log --force-lang="Ruby",feature --force-lang="Ruby",sass --force-lang="Ruby",haml'
 alias gitx='/Applications/GitX.app/Contents/MacOS/GitX'
