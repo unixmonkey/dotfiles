@@ -12,7 +12,7 @@ HISTCONTROL=erasedups
 HISTSIZE=100000
 shopt -s histappend # when your shell exits, its history is appended to the .bash_history file
 
-export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # set editor preferences
 export EDITOR='vim'
