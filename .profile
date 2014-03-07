@@ -27,7 +27,18 @@ function e(){
 export TERM=xterm
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
-export PS1='\[\e[36m\]\[\033[0;35m\]iFruit\[\033[0;33m\]\[\e[31m\]$(rubyversion)\[\033[0;33m\] \w\[\033[00m\]: '
+function color_my_prompt {
+  local __host="\[\033[01;35m\]\h"
+  local __pwd="\[\033[0;33m\]\w"
+  local __ruby_color="\[\e[31m\]"
+  local __ruby='\[\e[31m\]`rubyversion`'
+  local __git_branch='\[\033[0;32m\]`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+  local __prompt_tail="\[\033[00m\]:"
+  local __last_color="\[\033[00m\]"
+  export PS1="$__host $__ruby $__git_branch$__pwd$__last_color$__prompt_tail "
+}
+color_my_prompt
+
 
 # Make ruby faster by tuning the garbage collector
 #export RUBY_HEAP_MIN_SLOTS=500000
@@ -53,7 +64,14 @@ autopatch_intranet() {
 }
 
 rubyversion(){
-  echo " $(echo $RUBY_ROOT | awk -F/ '{print $NF}')"
+  echo "$(echo $RUBY_ROOT | awk -F/ '{print $NF}')"
+}
+
+gitbranch(){
+  BRANCH='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+  if $BRANCH; then
+    echo "($BRANCH) "
+  fi
 }
 
 # GIT aliases
