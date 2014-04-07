@@ -69,6 +69,7 @@ gitbranch(){
 
 # GIT aliases
 alias git-rm-all='git ls-files --deleted | xargs git rm'
+alias git-undo-last-commit='git reset --soft HEAD^'
 alias gs='git status'
 alias gd='git diff'
 alias ga='git add'
@@ -182,6 +183,9 @@ ship() {
   git checkout ${CURRENT}
 }
 
+git-track() {
+  git checkout --track origin/$1
+}
 
 # make a current local git repository into a server repo and push to server
 push_local_git_repo_to_server() {
