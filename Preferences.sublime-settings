@@ -45,7 +45,8 @@
 		"*.sublime-workspace",
 		"*.log",
 		"*.sql",
-		"*.dump"
+		"*.dump",
+		"tags"
 	],
 	"fold_buttons": true,
 	"folder_exclude_patterns":
