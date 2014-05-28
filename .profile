@@ -60,6 +60,17 @@ rubyversion(){
   echo "$(echo $RUBY_ROOT | awk -F/ '{print $NF}')"
 }
 
+git-churn(){
+  git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}' | sort -g
+}
+
+git-stats(){
+  git log --author="David Jones" --pretty=tformat: --numstat | \
+    grep -v spec | \
+    gawk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END \
+    { printf "lines added: %s, removed: %s net changed: %s\n",add,subs,loc }' -
+}
+
 gitbranch(){
   BRANCH='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
   if $BRANCH; then
