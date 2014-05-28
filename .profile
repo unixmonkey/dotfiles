@@ -105,7 +105,19 @@ s() {
   fi
 }
 sc() { s console $*; }
-ss() { s server $* --binding=127.0.0.1; }
+ss() {
+  if [ -e "Procfile.development" ]; then
+    echo 'Starting development services from Procfile.development'
+    foreman start -f Procfile.development
+  elif [ -e "Procfile" ]; then
+    echo 'Starting services from Procfile'
+    foreman start
+  else
+    echo 'Starting Rails server on localhost'
+    s server $* --binding=127.0.0.1
+  fi
+}
+
 rake_route_urls(){
   rake routes | sed -e "1d" -e "s,^[^/]*,,g" | awk '{print $1}' | sort | uniq
 }
