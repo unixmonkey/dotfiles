@@ -76,7 +76,7 @@
 		"side_bar_visible": true,
 		"status_bar_visible": true
 	},
-	"remember_open_files": true,
+	"remember_open_files": false,
 	"scroll_speed": 1.0,
 	"tab_completion": true,
 	"tab_size": 2,
