@@ -30,6 +30,9 @@ set number
 set ruler
 syntax on
 
+" 256 colors
+set t_Co=256
+
 " Whitespace stuff
 set nowrap
 set tabstop=2
