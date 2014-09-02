@@ -46,6 +46,7 @@ alias bake='bundle exec rake'
 alias st='open -a "Sublime Text" "$@"'
 alias clocrails='cloc . --exclude-dir=vendor,index,solr,tmp,script,log --force-lang="Ruby",feature --force-lang="Ruby",sass --force-lang="Ruby",haml'
 alias gitx='/Applications/GitX.app/Contents/MacOS/GitX'
+alias git-browse='/usr/local/git-browse/bin/git-browse'
 
 autopatch_intranet() {
   git format-patch HEAD~1
