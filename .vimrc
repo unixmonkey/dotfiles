@@ -8,6 +8,7 @@ call neobundle#begin(expand('/Users/djones/.vim/bundle'))
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 " My Bundles here:
+NeoBundle 'kossnocorp/up.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'janx/vim-rubytest'
@@ -143,7 +144,7 @@ set modeline
 set modelines=10
 
 " Default color scheme
-color desert
+colorscheme up
 
 " Cursor Line
 set cursorline
