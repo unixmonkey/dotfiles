@@ -8,6 +8,9 @@ call neobundle#begin(expand('/Users/djones/.vim/bundle'))
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 " My Bundles here:
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'slim-template/vim-slim'
 " You can specify revision/branch/tag.
 "      NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
 call neobundle#end()
