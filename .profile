@@ -78,6 +78,11 @@ gitbranch(){
   fi
 }
 
+git-push-branch(){
+  CURRENT=`git branch | grep '\*' | awk '{print $2}'`
+  git push -u origin $CURRENT
+}
+
 # GIT aliases
 alias git-rm-all='git ls-files --deleted | xargs git rm'
 alias git-undo-last-commit='git reset --soft HEAD^'
