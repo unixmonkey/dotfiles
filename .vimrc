@@ -145,6 +145,10 @@ set modelines=10
 " Default color scheme
 color desert
 
+" Cursor Line
+set cursorline
+hi CursorLine cterm=NONE ctermbg=52
+
 "Directories for swp files
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
