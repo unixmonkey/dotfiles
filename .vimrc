@@ -15,6 +15,7 @@ NeoBundle 'slim-template/vim-slim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'jewes/Conque-Shell'
 " You can specify revision/branch/tag.
 "      NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
 call neobundle#end()
