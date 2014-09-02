@@ -1,4 +1,22 @@
-set nocompatible
+
+"NeoBundle Scripts-----------------------------
+if has('vim_starting')
+  set nocompatible               " Be iMproved
+  set runtimepath+=/Users/djones/.vim/bundle/neobundle.vim/
+endif
+call neobundle#begin(expand('/Users/djones/.vim/bundle'))
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+" My Bundles here:
+" You can specify revision/branch/tag.
+"      NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
+call neobundle#end()
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+"End NeoBundle Scripts-------------------------
 
 set number
 set ruler
