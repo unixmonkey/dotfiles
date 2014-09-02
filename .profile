@@ -138,7 +138,7 @@ vdiff() {
 
 # copy your ssh key to the server for public key authentication
 ssh-copykey() {
-  cat ~/.ssh/id_rsa.pub | ssh $1 "cat - >> ~/.ssh/authorized_keys"
+  cat ~/.ssh/id_rsa.pub | ssh $1 "mkdir -p ~/.ssh/ && cat - >> ~/.ssh/authorized_keys"
 }
 
 # Bash function to find stuff
