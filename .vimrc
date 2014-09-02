@@ -11,6 +11,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'slim-template/vim-slim'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'rking/ag.vim'
 " You can specify revision/branch/tag.
 "      NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
 call neobundle#end()
