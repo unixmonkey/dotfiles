@@ -10,6 +10,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " My Bundles here:
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-rails'
+NeoBundle 'janx/vim-rubytest'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'rking/ag.vim'
@@ -48,6 +49,14 @@ set wildignore+=*.o,*.obj,.git,*.rbc
 
 " Status bar
 set laststatus=2
+
+" RubyTest
+let g:rubytest_cmd_test = "ruby %p"
+let g:rubytest_cmd_testcase = "ruby %p -n '/%c/'"
+let g:rubytest_cmd_spec = "spec -f specdoc %p"
+let g:rubytest_cmd_example = "spec -f specdoc %p -e '%c'"
+let g:rubytest_cmd_feature = "bundle exec cucumber %p"
+let g:rubytest_cmd_story = "bundle exec cucumber %p -n '%c'"
 
 " Without setting this, ZoomWin restores windows in a way that causes
 " equalalways behavior to be triggered the next time CommandT is used.
