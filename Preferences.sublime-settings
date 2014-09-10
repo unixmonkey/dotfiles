@@ -19,7 +19,7 @@
 		"*.gz",
 		"*.tgz"
 	],
-	"color_scheme": "Packages/Color Scheme - Default/Cobalt.tmTheme",
+	"color_scheme": "Packages/Theme - Cobalt2/cobalt2.tmTheme",
 	"draw_indent_guides": false,
 	"file_exclude_patterns":
 	[
