@@ -15,6 +15,7 @@ NeoBundle 'janx/vim-rubytest'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'rking/ag.vim'
+NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jewes/Conque-Shell'
 " You can specify revision/branch/tag.
