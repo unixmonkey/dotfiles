@@ -140,6 +140,10 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
+"Directories for swp files
+set backupdir=~/.vim/backup
+set directory=~/.vim/backup
+
 " Use modeline overrides
 set modeline
 set modelines=10
@@ -151,6 +155,9 @@ colorscheme up
 set cursorline
 hi CursorLine cterm=NONE ctermbg=52
 
-"Directories for swp files
-set backupdir=~/.vim/backup
-set directory=~/.vim/backup
+" Vim-GitGutter customization
+highlight SignColumn ctermbg=black ctermfg=black
+highlight GitGutterAdd ctermbg=black ctermfg=green
+highlight GitGutterChange ctermbg=black ctermfg=yellow
+highlight GitGutterDelete ctermbg=black ctermfg=red
+highlight GitGutterChangeDelete ctermbg=black ctermfg=yellow
