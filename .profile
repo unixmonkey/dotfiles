@@ -58,7 +58,7 @@ autopatch_intranet() {
 }
 
 rubyversion(){
-  if [ "$(type rvm | head -n 1)" == 'rvm is a function' ]; then
+  if [[ "$(type rvm | head -n 1)" == *"rvm is"* ]]; then
     echo "$(rvm-prompt v p g)"
   else
     echo "$(echo $RUBY_ROOT | awk -F/ '{print $NF}')"
