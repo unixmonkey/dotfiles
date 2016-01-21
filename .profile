@@ -190,6 +190,9 @@ pless() {
   pygmentize $1 | less -r
 }
 
+# Start simple webrick server for static content in current directory
+alias rubyserve='ruby -run -e httpd -- -p 5000 .'
+alias nodeserve='http-server -p 8080 .'
 
 # ===========================================================
 # = feature && hack && rake test && ship                    =
