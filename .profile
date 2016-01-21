@@ -246,5 +246,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # local bin
 export PATH="./bin:$PATH"
+export PATH="~/.dotfiles/bin:$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
