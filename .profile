@@ -150,6 +150,12 @@ rake_route_paths(){
   rake routes | sed -e "1d" -e "s,^[/^]*,,g" | awk '{print $1}' | sort | uniq
 }
 
+# get size of directories
+getsizeofdir() {
+  for i in $(ls $1); do
+    echo "$i: $(du -ch $i | grep total | sed 's/total//g')";
+  done
+}
 
 # search through your history
 histfind() {
