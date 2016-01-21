@@ -79,6 +79,9 @@ git-stats(){
     grep -v spec | \
     gawk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END { printf "lines added: %s, removed: %s net changed: %s\n",add,subs,loc }' -
 }
+
+git-files-changed-since-commit(){
+  git diff --name-only ${@}
 }
 
 gitbranch(){
