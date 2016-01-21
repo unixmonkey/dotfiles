@@ -113,6 +113,7 @@ alias gpurr='git pull --rebase'
 alias gshownew='git fetch && git log ..FETCH_HEAD'
 alias gribbon='git tag --force _ribbon origin/master'
 alias gcatchup='git log --patch --reverse --topo-order _ribbon..origin/master'
+alias git-authors="git log --format='%aN <%aE>' | sort -u"
 
 
 # RAILS
