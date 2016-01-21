@@ -58,10 +58,12 @@ autopatch_intranet() {
 }
 
 rubyversion(){
-  if [ "$(type rvm | head -n 1)" == 'rvm is a function' ]; then
-    echo "$(rvm-prompt v p g)"
-  else
-    echo "$(echo $RUBY_ROOT | awk -F/ '{print $NF}')"
+  if [ -e 'Gemfile' ]; then
+    if [ "$(type rvm | head -n 1)" == 'rvm is a function' ]; then
+      echo "$(rvm-prompt v p g) "
+    else
+      echo "$(echo "$RUBY_ROOT" | awk -F/ '{print $NF}') "
+    fi
   fi
 }
 
