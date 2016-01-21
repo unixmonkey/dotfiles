@@ -72,10 +72,13 @@ git-churn(){
 }
 
 git-stats(){
-  git log --author="David Jones" --pretty=tformat: --numstat | \
+  author=${@:-'David Jones'}
+  since=${@:-'1970-01-01 00:00:00'}
+  echo "Stats for commmits authored by ${author}"
+  git log --author="${author}" --since="${since}" --pretty=tformat: --numstat | \
     grep -v spec | \
-    gawk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END \
-    { printf "lines added: %s, removed: %s net changed: %s\n",add,subs,loc }' -
+    gawk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END { printf "lines added: %s, removed: %s net changed: %s\n",add,subs,loc }' -
+}
 }
 
 gitbranch(){
