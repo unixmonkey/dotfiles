@@ -121,13 +121,15 @@ gcodate() {
 
 # RAILS
 s() {
-  if [ -e "script/$1" ]; then
-    ./script/$*
-  else
-    bundle exec rails $*
+  if [ -e "./bin/rails" ]; then
+    ./bin/rails "$@"
+  elif [ -e "./script/rails" ]; then
+    ./script/rails "$@"
+  elif [ -e 'Gemfile' ]; then
+    bundle exec rails "$@"
   fi
 }
-sc() { s console $*; }
+sc() { s console "$@"; }
 ss() {
   if [ -e "Procfile.development" ]; then
     echo 'Starting development services from Procfile.development'
@@ -137,7 +139,7 @@ ss() {
     foreman start
   else
     echo 'Starting Rails server on localhost'
-    s server $* --binding=127.0.0.1
+    s server "$*" --binding=127.0.0.1
   fi
 }
 
