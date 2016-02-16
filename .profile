@@ -100,7 +100,7 @@ git-push-branch(){
 alias git-rm-all='git ls-files --deleted | xargs git rm'
 alias git-undo-last-commit='git reset --soft HEAD^'
 alias gs='git status'
-alias gd='git diff'
+alias gd='git diff --color $@ | diff-so-fancy'
 alias ga='git add'
 alias gb='git branch'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr by %C(bold blue)%an%Cgreen)%Creset" --abbrev-commit --date=relative'
