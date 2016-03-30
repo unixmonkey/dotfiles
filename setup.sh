@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES='.gemrc .gitconfig .gitignore_global .irbrc .profile .vimrc'
+DOTFILES='.gemrc .gitconfig .gitignore_global .irbrc .pryrc .profile .vimrc'
 
 # Install NeoBundle for Vim
 curl https://raw.githubusercontent.com/Shougo/neobundle.vim/5ecb7b9eaac0596f768c667bb21acd3ace344946/bin/install.sh | sh
