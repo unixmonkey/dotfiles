@@ -19,6 +19,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " My Bundles here:
 NeoBundle 'unixmonkey/up.vim'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-rhubarb'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'janx/vim-rubytest'
 NeoBundle 'slim-template/vim-slim'
@@ -165,9 +166,38 @@ colorscheme up
 set cursorline
 hi CursorLine cterm=NONE ctermbg=52
 
+" FZF
+set rtp+=~/.fzf
+
 " Vim-GitGutter customization
 highlight SignColumn ctermbg=black ctermfg=black
 highlight GitGutterAdd ctermbg=black ctermfg=green
 highlight GitGutterChange ctermbg=black ctermfg=yellow
 highlight GitGutterDelete ctermbg=black ctermfg=red
 highlight GitGutterChangeDelete ctermbg=black ctermfg=yellow
+
+" fugitive
+nmap tg :Gstatus<CR>
+nmap tgd :Gdiff<CR>
+nmap tgb :Gblame<CR>
+
+" Search the current working copy
+nmap tgg :Ggrep -Ei<space>
+nmap // tgg
+
+" Navigate through historical diffs
+nmap tgl :Glog -100 -- %<CR>
+nmap tgll :Glog -100 --<CR>
+
+" History of additions / removals of the search word in diffs
+" In the current file:
+nmap tgh :Glog --pickaxe-regex -S -- %<Left><Left><Left><Left><Left>
+" Across all files:
+nmap tghh :Glog --pickaxe-regex -S --<Left><Left><Left>
+
+" Search log messages
+nmap tgs :Glog --grep<space>
+" Search for occurrences of the search word in diffs
+nmap tgss :Glog -G
+
+au Syntax git setlocal nofoldenable
