@@ -20,7 +20,7 @@ export SVN_EDITOR='vim'
 export GIT_EDITOR='vim'
 export BUNDLER_EDITOR='subl -w'
 function e(){
-  subl $*
+  subl "$@"
 }
 
 # super happy fun prompt showing server name and current directory with purdy colors
@@ -28,14 +28,13 @@ export TERM=xterm
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 function color_my_prompt {
-  local __host="\[\033[01;35m\]\h"
+  local __host="\[\033[01;35m\]\h "
   local __pwd="\[\033[0;33m\]\w"
-  local __ruby_color="\[\e[31m\]"
   local __ruby='\[\e[31m\]`rubyversion`'
   local __git_branch='\[\033[0;32m\]`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
   local __prompt_tail="\[\033[00m\]:"
   local __last_color="\[\033[00m\]"
-  export PS1="$__host $__ruby $__git_branch$__pwd$__last_color$__prompt_tail "
+  export PS1="$__host$__ruby$__git_branch$__pwd$__last_color$__prompt_tail "
 }
 color_my_prompt
 
@@ -92,8 +91,8 @@ gitbranch(){
 }
 
 git-push-branch(){
-  CURRENT=`git branch | grep '\*' | awk '{print $2}'`
-  git push -u origin $CURRENT
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
+  git push -u origin "$CURRENT"
 }
 
 # GIT aliases
@@ -107,8 +106,8 @@ alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %
 alias gco='git checkout'
 alias gcm='git commit -m'
 alias gca='git commit --amend'
-alias g{='git stash'
-alias g}='git stash apply'
+alias 'g{'='git stash'
+alias 'g}'='git stash apply'
 alias gpurr='git pull --rebase'
 alias gshownew='git fetch && git log ..FETCH_HEAD'
 alias gribbon='git tag --force _ribbon origin/master'
@@ -164,18 +163,18 @@ histfind() {
 
 # Use vim for a nice diff tool
 vdiff() {
-  vim -d $*
+  vim -d "$@"
 }
 
 # copy your ssh key to the server for public key authentication
 ssh-copykey() {
-  cat ~/.ssh/id_rsa.pub | ssh $1 "mkdir -p ~/.ssh/ && cat - >> ~/.ssh/authorized_keys"
+  cat ~/.ssh/id_rsa.pub | ssh "$1" "mkdir -p ~/.ssh/ && cat - >> ~/.ssh/authorized_keys"
 }
 
 # Bash function to find stuff
 # $* means take in all arguments
 find_in_dir() {
-  find . | xargs grep $*
+  find . | xargs grep "$@"
 }
 
 # uses find to list every file in current directory and
@@ -187,7 +186,7 @@ count_files_in_dir() {
 # less with syntax coloring provided by
 # pygments (python easy-install pygments)
 pless() {
-  pygmentize $1 | less -r
+  pygmentize "$1" | less -r
 }
 
 # Start simple webrick server for static content in current directory
@@ -201,31 +200,31 @@ alias nodeserve='http-server -p 8080 .'
 
 # create new named feature branch and switch to it
 feature() {
-  git checkout -b $1
+  git checkout -b "$1"
 }
 
 # show commits only this feature branch
 feature_commits() {
-  CURRENT=`git branch | grep '\*' | awk '{print $2}'`
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
   echo "Commits in branch \"${CURRENT}\", but not \"master\":"
-  git log master..${CURRENT} --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset" --abbrev-commit --date=relative
+  git log master.."${CURRENT}" --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset" --abbrev-commit --date=relative
 }
 
 # show diff of things in this branch not in master
 feature_changes() {
-  CURRENT=`git branch | grep '\*' | awk '{print $2}'`
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
   echo "Commits in branch \"${CURRENT}\", but not \"master\":"
-  git diff master..${CURRENT}
+  git diff master.."${CURRENT}"
 }
 
 # rebase the current state of master into the feature branch
 # and fast-forward your changes on top of that for easy
 # conflict resolution (or avoidance)
 hack() {
-  CURRENT=`git branch | grep '\*' | awk '{print $2}'`
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
   git checkout master
   git pull origin master
-  git checkout ${CURRENT}
+  git checkout "${CURRENT}"
   git rebase master
 }
 
@@ -233,15 +232,15 @@ hack() {
 # change back (in case you want to work more on that feature)
 # note: you should run your tests before shipping
 ship() {
-  CURRENT=`git branch | grep '\*' | awk '{print $2}'`
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
   git checkout master
-  git merge ${CURRENT}
+  git merge "${CURRENT}"
   git push origin master
-  git checkout ${CURRENT}
+  git checkout "${CURRENT}"
 }
 
 git-track() {
-  git checkout --track origin/$1
+  git checkout --track origin/"$1"
 }
 
 # make a current local git repository into a server repo and push to server
@@ -249,15 +248,15 @@ push_local_git_repo_to_server() {
   SERVER_FOLDER=$1 # FORMAT: username@host:~/folder
   CURRENT_FOLDER_NAME=${PWD##*/}
   GIT_REPO_FOLDER_NAME=${CURRENT_FOLDER_NAME}.git
-  ORIGIN_SERVER_FOLDER=`echo ${SERVER_FOLDER} | awk '{ sub(":","/"); print $1 }'`
-  mkdir ${GIT_REPO_FOLDER_NAME}
-  cd ${GIT_REPO_FOLDER_NAME}
+  ORIGIN_SERVER_FOLDER=$(echo "${SERVER_FOLDER}" | awk '{ sub(":","/"); print $1 }')
+  mkdir "${GIT_REPO_FOLDER_NAME}"
+  cd "${GIT_REPO_FOLDER_NAME}"
   git init --bare
   cd ..
-  scp -r ${GIT_REPO_FOLDER_NAME} ${SERVER_FOLDER}
-  git remote add origin ssh://${ORIGIN_SERVER_FOLDER}/${GIT_REPO_FOLDER_NAME}
+  scp -r "${GIT_REPO_FOLDER_NAME}" "${SERVER_FOLDER}"
+  git remote add origin "ssh://${ORIGIN_SERVER_FOLDER}/${GIT_REPO_FOLDER_NAME}"
   git push origin master
-  rm -r ./${GIT_REPO_FOLDER_NAME}
+  rm -r ./"${GIT_REPO_FOLDER_NAME}"
 }
 
 # load chruby
