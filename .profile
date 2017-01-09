@@ -99,6 +99,7 @@ git-push-branch(){
 # GIT aliases
 alias git-rm-all='git ls-files --deleted | xargs git rm'
 alias git-undo-last-commit='git reset --soft HEAD^'
+alias git-quick-tag='git tag `date +"%Y%m%d"`-`git rev-parse --short HEAD`'
 alias gs='git status'
 alias gd='git diff --color $@ | diff-so-fancy'
 alias ga='git add'
