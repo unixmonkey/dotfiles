@@ -121,6 +121,7 @@ gcodate() {
 
 
 # RAILS
+alias migrate='bundle exec rake db:migrate'
 s() {
   if [ -e "./bin/rails" ]; then
     ./bin/rails "$@"
@@ -135,6 +136,9 @@ ss() {
   if [ -e "Procfile.development" ]; then
     echo 'Starting development services from Procfile.development'
     foreman start -f Procfile.development
+  elif [ -e "Procfile.dev" ]; then
+    echo 'Starting development services from Procfile.dev'
+    foreman start -f Procfile.dev
   elif [ -e "Procfile" ]; then
     echo 'Starting services from Procfile'
     foreman start
@@ -143,6 +147,7 @@ ss() {
     s server "$*" --binding=127.0.0.1
   fi
 }
+
 
 rake_route_urls(){
   rake routes | sed -e "1d" -e "s,^[^/]*,,g" | awk '{print $1}' | sort | uniq
