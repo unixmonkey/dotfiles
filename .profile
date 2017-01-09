@@ -13,6 +13,7 @@ HISTSIZE=100000
 shopt -s histappend # when your shell exits, its history is appended to the .bash_history file
 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+alias npm-exec='PATH=$(npm bin):$PATH'
 
 # set editor preferences
 export EDITOR='vim'
@@ -270,4 +271,11 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="./bin:$PATH"
 export PATH="~/.dotfiles/bin:$PATH"
 
+# RVM
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# NVM
+. ~/.nvm/nvm.sh
+nvm use 6.5
+alias nbin='PATH=$(npm bin):$PATH'
+export PATH="$PATH:./node_modules/.bin"
