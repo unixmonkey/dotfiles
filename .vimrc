@@ -24,6 +24,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'janx/vim-rubytest'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'elixir-lang/vim-elixir'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'airblade/vim-gitgutter'
@@ -194,6 +195,9 @@ nmap tgll :Glog -100 --<CR>
 nmap tgh :Glog --pickaxe-regex -S -- %<Left><Left><Left><Left><Left>
 " Across all files:
 nmap tghh :Glog --pickaxe-regex -S --<Left><Left><Left>
+
+"search history of the current file
+nmap tghhh :Glog --all --full-history -- %
 
 " Search log messages
 nmap tgs :Glog --grep<space>
