@@ -19,7 +19,7 @@ alias npm-exec='PATH=$(npm bin):$PATH'
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 export GIT_EDITOR='vim'
-export BUNDLER_EDITOR='subl -w'
+export BUNDLER_EDITOR='code'
 function e(){
   subl "$@"
 }
@@ -40,12 +40,11 @@ function color_my_prompt {
 color_my_prompt
 
 # Shortcuts
-alias code='cd ~/code'
 alias b='bundle exec'
 alias bake='bundle exec rake'
 alias st='open -a "Sublime Text" "$@"'
 alias clocrails='cloc . --exclude-dir=vendor,index,solr,tmp,script,log --force-lang="Ruby",feature --force-lang="Ruby",sass --force-lang="Ruby",haml'
-alias gitx='/Applications/GitX.app/Contents/MacOS/GitX'
+alias gitx='/Applications/GitX.app/Contents/MacOS/GitX . &'
 alias git-browse='/usr/local/git-browse/bin/git-browse'
 
 autopatch_intranet() {
@@ -101,7 +100,7 @@ alias git-rm-all='git ls-files --deleted | xargs git rm'
 alias git-undo-last-commit='git reset --soft HEAD^'
 alias git-quick-tag='git tag `date +"%Y%m%d"`-`git rev-parse --short HEAD`'
 alias gs='git status'
-alias gd='git diff --color $@ | diff-so-fancy'
+alias gd='git diff --color $@'
 alias ga='git add'
 alias gb='git branch'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr by %C(bold blue)%an%Cgreen)%Creset" --abbrev-commit --date=relative'
@@ -111,6 +110,7 @@ alias gca='git commit --amend'
 alias 'g{'='git stash'
 alias 'g}'='git stash apply'
 alias gpurr='git pull --rebase'
+alias gdeleteremotebranch='git push origin --delete $@'
 alias gshownew='git fetch && git log ..FETCH_HEAD'
 alias gribbon='git tag --force _ribbon origin/master'
 alias gcatchup='git log --patch --reverse --topo-order _ribbon..origin/master'
@@ -119,6 +119,30 @@ gcodate() {
   "git checkout $(git rev-list -n 1 --before='$1 00:00' master)"
 }
 
+# Print out the most recent stash with `stash`
+# Print out 2 stashes ago with `stash 2`
+stash() {
+  if ! [[ $1 ]]; then
+    CMD="git stash show stash@{0} -p"
+  else
+    CMD="git stash show stash@{$1} -p"
+  fi
+  echo $CMD
+  $CMD
+}
+
+# Print out all git stash diffs
+stashes() {
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
+  for i in $(git stash list | awk '{print $1}'); do
+    if [[ $i =~ ^(stash.+): ]]; then
+      echo ${BASH_REMATCH[1]};
+      git stash show ${BASH_REMATCH[1]} -p;
+    fi
+  done
+}
+
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 # RAILS
 alias migrate='bundle exec rake db:migrate'
@@ -266,6 +290,52 @@ push_local_git_repo_to_server() {
   rm -r ./"${GIT_REPO_FOLDER_NAME}"
 }
 
+# shallow-clone a repo to count the lines of code and delete
+cloc_repo() {
+  git clone --depth 1 "$1" temp-linecount-repo &&
+  printf "('temp-linecount-repo' will be deleted automatically)\n\n\n" &&
+  cloc temp-linecount-repo &&
+  rm -rf temp-linecount-repo
+}
+
+lessonly() {
+  osascript -e '
+    current_tab("foreman start -f Procfile.ignore all=1,web=0")
+    new_tab("bin/rails server")
+    new_tab("code .")
+
+    on current_tab(command)
+      tell application "Terminal"
+        activate
+        delay 1
+        do script "cd ~/code/fretless/lessonly/lessonly" as text in selected tab of front window
+        delay 1
+        do script command as text in selected tab of front window
+        delay 1
+      end tell
+    end current_tab
+
+    on new_tab(command)
+      tell application "Terminal"
+        activate
+        tell application "System Events"
+          keystroke "t" using command down
+        end
+        my current_tab(command)
+      end tell
+    end new_tab
+  '
+}
+
+# This is sometimes needed if the hard drive gets > 90% full, then elastic goes read-only. Clear disk space and run this command.
+fix_elasticsearch_read_only() {
+  curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
+}
+
+ten_times() {
+  seq 10 | xargs -Iz $@;
+}
+
 # load chruby
 #source /usr/local/opt/chruby/share/chruby/chruby.sh
 #source /usr/local/opt/chruby/share/chruby/auto.sh
@@ -281,7 +351,29 @@ export PATH="~/.dotfiles/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # NVM
-. ~/.nvm/nvm.sh
-nvm use 6.5
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 alias nbin='PATH=$(npm bin):$PATH'
 export PATH="$PATH:./node_modules/.bin"
+
+# Android Studio
+ANDROID_HOME=/Users/djones/Library/Android/sdk
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin"
+
+# Elixir iex history
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn to auto-switch to a specified .node-version
+export PATH="/usr/local/opt/qt@5.5/bin:$PATH"
+
+# for Crystal-lang's Lucky framework
+export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
+export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+
+# Golang
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
