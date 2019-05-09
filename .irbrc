@@ -49,11 +49,6 @@ IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-history"
     warn "Couldn't load irb/completion: #{err}"
   end
 
-# ----------------------------------------
-#  Indent blocks
-# ----------------------------------------
-  IRB.conf[:AUTO_INDENT] = true
-
 def clear
   system('clear')
 end
@@ -62,7 +57,7 @@ end
 #  Set IRB prompt to include project name and env (Rails)
 #  app_name[development]> or app_name[production]>, etc...
 # ----------------------------------------
-  if ENV['RAILS_ENV']
+  if ENV["RAILS_ENV"]
     rails_root = File.basename(Dir.pwd)
     prompt = "#{rails_root}[#{ENV['RAILS_ENV']}]"
     IRB.conf[:PROMPT] ||= {}
@@ -98,7 +93,7 @@ end
 #  helper.helper_name on the console
 #  http://errtheblog.com/posts/41-real-console-helpers
 # ---------------------------------------
-  if ENV['RAILS_ENV']
+  if ENV["RAILS_ENV"]
     def Object.method_added(method)
       return super(method) unless method == :helper
       (class<<self;self;end).send(:remove_method, :method_added)
@@ -169,7 +164,8 @@ end
 # ---------------------------------------
 #  Benchmark block run time
 # ---------------------------------------
-  def benchmark
+
+  def benchmark_simple
     # From http://blog.evanweaver.com/articles/2006/12/13/benchmark/
     # Call benchmark { } with any block and you get the wallclock runtime
     # as well as a percent change + or - from the last run
