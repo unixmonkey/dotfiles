@@ -20,9 +20,6 @@ export EDITOR='vim'
 export SVN_EDITOR='vim'
 export GIT_EDITOR='vim'
 export BUNDLER_EDITOR='code'
-function e(){
-  subl "$@"
-}
 
 # super happy fun prompt showing server name and current directory with purdy colors
 export TERM=xterm
@@ -41,20 +38,10 @@ color_my_prompt
 
 # Shortcuts
 alias b='bundle exec'
-alias bake='bundle exec rake'
 alias st='open -a "Sublime Text" "$@"'
 alias clocrails='cloc . --exclude-dir=vendor,index,solr,tmp,script,log --force-lang="Ruby",feature --force-lang="Ruby",sass --force-lang="Ruby",haml'
 alias gitx='/Applications/GitX.app/Contents/MacOS/GitX . &'
 alias git-browse='/usr/local/git-browse/bin/git-browse'
-
-autopatch_intranet() {
-  git format-patch HEAD~1
-  for SERVER in 'iceman' 'cyclops' 'mystique'; do
-    echo "Sending patch to $SERVER"
-    scp *.patch root@$SERVER:~/intranet
-  done
-  shit
-}
 
 rubyversion(){
   if [ -e 'Gemfile' ]; then
@@ -298,9 +285,39 @@ cloc_repo() {
   rm -rf temp-linecount-repo
 }
 
+chexology() {
+  osascript -e '
+    current_tab("redis-server .")
+    new_tab("bin/rails s")
+    new_tab("code .")
+
+    on current_tab(command)
+      tell application "Terminal"
+        activate
+        delay 1
+        do script "cd ~/code/github/chexology/chexology-rails" as text in selected tab of front window
+        delay 1
+        do script command as text in selected tab of front window
+        delay 1
+      end tell
+    end current_tab
+
+    on new_tab(command)
+      tell application "Terminal"
+        activate
+        tell application "System Events"
+          keystroke "t" using command down
+        end
+        my current_tab(command)
+      end tell
+    end new_tab
+  '
+}
+
 lessonly() {
   osascript -e '
-    current_tab("foreman start -f Procfile.ignore all=1,web=0")
+    current_tab("docker-compose up")
+    new_tab("foreman start -f Procfile.ignore all=1,web=0")
     new_tab("bin/rails server")
     new_tab("code .")
 
@@ -351,10 +368,10 @@ export PATH="~/.dotfiles/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # NVM
-export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
-alias nbin='PATH=$(npm bin):$PATH'
-export PATH="$PATH:./node_modules/.bin"
+#export NVM_DIR="$HOME/.nvm"
+#. "/usr/local/opt/nvm/nvm.sh"
+#alias nbin='PATH=$(npm bin):$PATH'
+#export PATH="$PATH:./node_modules/.bin"
 
 # Android Studio
 ANDROID_HOME=/Users/djones/Library/Android/sdk
@@ -377,3 +394,8 @@ export GOPATH=$HOME/go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+
+# asdf-vm
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
