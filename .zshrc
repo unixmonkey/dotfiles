@@ -17,8 +17,5 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-# Brew doctor recommends this:
-export PATH="/usr/local/sbin:$PATH"
-
 # Load custom aliases and functions
 source ~/.profile
