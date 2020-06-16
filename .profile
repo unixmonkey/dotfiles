@@ -7,34 +7,16 @@
 #
 # *****************************************
 
-# Me and you; we have history, you know?
-HISTCONTROL=erasedups
-HISTSIZE=100000
-shopt -s histappend # when your shell exits, its history is appended to the .bash_history file
+# Shell coloring
+export TERM=xterm
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
 
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-alias npm-exec='PATH=$(npm bin):$PATH'
-
-# set editor preferences
+# Editor preferences
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 export GIT_EDITOR='vim'
 export BUNDLER_EDITOR='code'
-
-# super happy fun prompt showing server name and current directory with purdy colors
-export TERM=xterm
-export CLICOLOR=1
-export LSCOLORS=ExFxCxDxBxegedabagacad
-function color_my_prompt {
-  local __host="\[\033[01;35m\]\h "
-  local __pwd="\[\033[0;33m\]\w"
-  local __ruby='\[\e[31m\]`rubyversion`'
-  local __git_branch='\[\033[0;32m\]`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
-  local __prompt_tail="\[\033[00m\]:"
-  local __last_color="\[\033[00m\]"
-  export PS1="$__host$__ruby$__git_branch$__pwd$__last_color$__prompt_tail "
-}
-color_my_prompt
 
 # Shortcuts
 alias b='bundle exec'
@@ -285,10 +267,13 @@ cloc_repo() {
   rm -rf temp-linecount-repo
 }
 
+alias chexology-rails='cd ~/code/github/chexology/chexology-rails'
+alias chexology-ios='cd ~/code/github/chexology/chexology-ios'
 chexology() {
   osascript -e '
     current_tab("redis-server .")
-    new_tab("bin/rails s")
+    new_tab("bin/rails s -b 0.0.0.0")
+    new_tab("bin/rails jobs:work")
     new_tab("code .")
 
     on current_tab(command)
@@ -296,36 +281,6 @@ chexology() {
         activate
         delay 1
         do script "cd ~/code/github/chexology/chexology-rails" as text in selected tab of front window
-        delay 1
-        do script command as text in selected tab of front window
-        delay 1
-      end tell
-    end current_tab
-
-    on new_tab(command)
-      tell application "Terminal"
-        activate
-        tell application "System Events"
-          keystroke "t" using command down
-        end
-        my current_tab(command)
-      end tell
-    end new_tab
-  '
-}
-
-lessonly() {
-  osascript -e '
-    current_tab("docker-compose up")
-    new_tab("foreman start -f Procfile.ignore all=1,web=0")
-    new_tab("bin/rails server")
-    new_tab("code .")
-
-    on current_tab(command)
-      tell application "Terminal"
-        activate
-        delay 1
-        do script "cd ~/code/fretless/lessonly/lessonly" as text in selected tab of front window
         delay 1
         do script command as text in selected tab of front window
         delay 1
@@ -353,49 +308,24 @@ ten_times() {
   seq 10 | xargs -Iz $@;
 }
 
-# load chruby
-#source /usr/local/opt/chruby/share/chruby/chruby.sh
-#source /usr/local/opt/chruby/share/chruby/auto.sh
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# local bin
-export PATH="./bin:$PATH"
-export PATH="~/.dotfiles/bin:$PATH"
-
-# RVM
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-# NVM
-#export NVM_DIR="$HOME/.nvm"
-#. "/usr/local/opt/nvm/nvm.sh"
-#alias nbin='PATH=$(npm bin):$PATH'
-#export PATH="$PATH:./node_modules/.bin"
-
-# Android Studio
-ANDROID_HOME=/Users/djones/Library/Android/sdk
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home
-export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin"
-
 # Elixir iex history
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn to auto-switch to a specified .node-version
+# Local bin paths
+export PATH="./bin:$PATH"
+export PATH="$HOME/.dotfiles/bin:$PATH"
+
+# Homebrew bin paths
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+# Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# Needed for MySQL and some other things to compile
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 export PATH="/usr/local/opt/qt@5.5/bin:$PATH"
-
-# for Crystal-lang's Lucky framework
-export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
-
-# Golang
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
-
-# asdf-vm
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib
+export PKG_CONFIG_PATH="/usr/local/opt/readline/lib/pkgconfig"
