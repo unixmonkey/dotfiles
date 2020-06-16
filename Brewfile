@@ -8,6 +8,7 @@ brew 'readline'
 brew 'pkg-config'
 brew 'mysql-client'
 brew 'redis'
+brew 'ios-deploy'
 
 cask 'visual-studio-code'
 cask 'rowanj-gitx'
