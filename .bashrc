@@ -15,9 +15,10 @@ function color_my_prompt {
 }
 color_my_prompt
 
+# Load custom aliases and functions
+source ~/.profile
+
 # asdf-vm
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
-# Load custom aliases and functions
-source ~/.profile

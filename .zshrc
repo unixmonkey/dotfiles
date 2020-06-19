@@ -9,6 +9,9 @@ zstyle ':vcs_info:git:*' formats ' (%b)'
 setopt PROMPT_SUBST
 PROMPT='%F{magenta}%m%F{green}${vcs_info_msg_0_}%F{yellow} %~%F{white}: '
 
+# Load custom aliases and functions
+source ~/.profile
+
 # ASDF
 . $(brew --prefix asdf)/asdf.sh
 if type brew &>/dev/null; then
@@ -17,5 +20,3 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-# Load custom aliases and functions
-source ~/.profile
