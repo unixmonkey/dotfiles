@@ -132,7 +132,8 @@
             }
           }
         }
-      }
+      },
+      "ag": null
     },
     "cask": {
       "visual-studio-code": {
@@ -157,6 +158,36 @@
         "version": "latest",
         "options": {
           "full_name": "dropbox"
+        }
+      },
+      "imageoptim": {
+        "version": "1.8.8",
+        "options": {
+          "full_name": "imageoptim"
+        }
+      },
+      "keycastr": {
+        "version": "0.9.8",
+        "options": {
+          "full_name": "keycastr"
+        }
+      },
+      "cyberduck": {
+        "version": "7.4.0.32960",
+        "options": {
+          "full_name": "cyberduck"
+        }
+      },
+      "flux": {
+        "version": "40.1",
+        "options": {
+          "full_name": "flux"
+        }
+      },
+      "graphiql": {
+        "version": "0.7.2",
+        "options": {
+          "full_name": "graphiql"
         }
       }
     },
