@@ -64,15 +64,23 @@ git-push-branch(){
   git push -u origin "$CURRENT"
 }
 
+gpf(){
+  CURRENT=$(git branch | grep '\*' | awk '{print $2}')
+  git push --force-with-lease origin "$CURRENT"
+}
+
+
 # GIT aliases
 alias git-rm-all='git ls-files --deleted | xargs git rm'
 alias git-undo-last-commit='git reset --soft HEAD^'
 alias git-quick-tag='git tag `date +"%Y%m%d"`-`git rev-parse --short HEAD`'
+alias git-reflog='git reflog --pretty="%C(auto)%h %<|(20)%gd %C(blue)%cr%C(reset) %gs (%s)"'
 alias gs='git status'
 alias gd='git diff --color $@'
 alias ga='git add'
 alias gb='git branch'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr by %C(bold blue)%an%Cgreen)%Creset" --abbrev-commit --date=relative'
+alias gr='git branch --sort=-committerdate --format="%(committerdate:relative)%09%(refname:short)"'
 alias gco='git checkout'
 alias gcm='git commit -m'
 alias gca='git commit --amend'
@@ -269,6 +277,7 @@ cloc_repo() {
 
 alias chexology-rails='cd ~/code/github/chexology/chexology-rails'
 alias chexology-ios='cd ~/code/github/chexology/chexology-ios'
+alias xopen='chexology-ios && xed .'
 chexology() {
   osascript -e '
     current_tab("redis-server .")
@@ -308,6 +317,51 @@ ten_times() {
   seq 10 | xargs -Iz $@;
 }
 
+fix-displays() {
+  LAPTOP_DISPLAY_PARAMS="id:5A0A9DED-3DC9-5699-789D-2B816E45ACC0 res:1792x1120 hz:59 color_depth:4 scaling:on origin:(0,0) degree:0"
+  DISPLAY_ONE_PARAMS="id:F2DE74D8-45DB-1235-3A42-D497FF4DFC94 res:2560x1440 hz:59 color_depth:8 scaling:off"
+  DISPLAY_TWO_PARAMS="id:929A02C5-AB7A-209D-76E2-89B36F7F13CA res:2560x1440 hz:59 color_depth:8 scaling:off"
+
+  echo "Swapping displays..."
+  displayplacer "$LAPTOP_DISPLAY_PARAMS" "$DISPLAY_ONE_PARAMS origin:(-5120,-229) degree:0" "$DISPLAY_TWO_PARAMS origin:(-2560,-229) degree:0"
+  echo "\nDid that fix it?"
+
+  if read -q "choice?Y/N:"; then
+    echo "\nGreat!"
+  else
+    echo "\nTrying the other way..."
+    displayplacer "$LAPTOP_DISPLAY_PARAMS" "$DISPLAY_ONE_PARAMS origin:(-2560,-229) degree:0" "$DISPLAY_TWO_PARAMS origin:(-5120,-229) degree:0"
+  fi
+
+  # Re-arrange windows with Moom shortcut
+  osascript -e '
+      tell application "System Events"
+        keystroke ";" using command down
+      end
+  '
+}
+
+update-chromedriver() {
+  echo "Fixing Chrome so it can get software updates again"
+  sudo rm -rf ~/Library/Google/GoogleSoftwareUpdate
+  echo "\nQuit and re-launch Chrome before continuing"
+  echo "\nIs Chrome re-launched yet?"
+  if read -q "choice?Y/N"; then
+    echo "\nUpdating Homebrew"
+    brew update
+    echo "\nInstalling updated chromedriver"
+    brew upgrade chromedriver
+    echo "\nMarking it safe to execute"
+    xattr -d com.apple.quarantine /usr/local/bin/chromedriver
+    echo "\nDisabling Chrome updates again..."
+    sudo chown nobody:nogroup ~/Library/Google/GoogleSoftwareUpdate
+    sudo chmod 000 ~/Library/Google/GoogleSoftwareUpdate
+    echo "\nDone!"
+  else
+    echo "\nOK. Quitting."
+  fi
+}
+
 # Elixir iex history
 export ERL_AFLAGS="-kernel shell_history enabled"
 
@@ -320,6 +374,11 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# ImageMagick
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/imagemagick@6/lib"
+export CPPFLAGS="-I/usr/local/opt/imagemagick@6/include"
 
 # Needed for MySQL and some other things to compile
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
